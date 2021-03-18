@@ -17,11 +17,6 @@ export default function Notes({ data }: any) {
     },
   ]);
 
-  useEffect(() => {
-    setNotes(data);
-    console.log(data);
-  }, [data]);
-
   const handleOpenNote = (note: any) => {
     setTitle(note.title);
     setText(note.content);
