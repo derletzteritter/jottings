@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { NextPageContext } from "next";
 
-export default function Notes() {
+export default function Notes({ data }: any) {
 	const [notes, setNotes] = useState([
 		{
 			id: 1,
@@ -13,6 +14,8 @@ export default function Notes() {
 			content: "Goat is really rude"
 		}
 	])
+
+	console.log(data);
 
 	const [text, setText] = useState('');
 
@@ -30,7 +33,7 @@ export default function Notes() {
 				 */}
 
 				 <div>
-					 {notes.map((note) => (
+					 {data.map((note: any) => (
 					 	<div key={note.id} className="p-3 border-gray-300 border-b hover:bg-gray-100 cursor-pointer">
 							  <h1 className="font-medium">{note.title}</h1>
 							  <p className="text-gray-400">{note.content}</p>
@@ -43,4 +46,15 @@ export default function Notes() {
 			</main>
 		</div>
 	)
+}
+
+export async function getStaticProps(ctx: NextPageContext) {
+	const res = await fetch('http://localhost:3000/api/notes', {
+		method: 'POST'
+	});
+	const data = await res.json();
+
+	return {
+		props: { data }
+	}
 }
