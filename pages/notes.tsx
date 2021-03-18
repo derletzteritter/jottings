@@ -83,7 +83,7 @@ export default function Notes({ data }: any) {
   );
 }
 
-export async function getStaticProps(ctx: NextPageContext) {
+/*export async function getStaticProps(ctx: NextPageContext) {
   const res = await fetch('http://localhost:3000/api/notes', {
     method: 'GET',
   });
@@ -92,4 +92,4 @@ export async function getStaticProps(ctx: NextPageContext) {
   return {
     props: { data },
   };
-}
+}*/
