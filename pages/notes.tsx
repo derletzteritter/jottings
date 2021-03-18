@@ -13,9 +13,13 @@ export default function Notes({ data }: any) {
     {
       id: 2,
       title: 'My second note',
-      content: 'This is a app that still does not really work',
+      content: 'This is a app that still does not work',
     },
   ]);
+
+  useEffect(() => {
+    setNotes(data);
+  }, [data]);
 
   const handleOpenNote = (note: any) => {
     setTitle(note.title);
@@ -89,7 +93,7 @@ export default function Notes({ data }: any) {
   );
 }
 
-/*export async function getStaticProps(ctx: NextPageContext) {
+export async function getStaticProps(ctx: NextPageContext) {
   const res = await fetch('http://localhost:3000/api/notes', {
     method: 'GET',
   });
@@ -98,4 +102,4 @@ export default function Notes({ data }: any) {
   return {
     props: { data },
   };
-}*/
+}
