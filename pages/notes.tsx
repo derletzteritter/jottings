@@ -4,7 +4,18 @@ import { NextPageContext } from 'next';
 export default function Notes({ data }: any) {
   const [text, setText] = useState('');
   const [title, setTitle] = useState('');
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState([
+    {
+      id: 1,
+      title: 'My first note',
+      content: 'This is a great app',
+    },
+    {
+      id: 2,
+      title: 'My second note',
+      content: 'This is a app that still does not really work',
+    },
+  ]);
 
   useEffect(() => {
     setNotes(data);
@@ -51,7 +62,7 @@ export default function Notes({ data }: any) {
                 >
                   {note.title}
                 </h1>
-                <p className="text-gray-400">{note.content}</p>
+                <p className="text-gray-400">{note.content.slice(0, 15)}</p>
               </div>
               <div>
                 <button
