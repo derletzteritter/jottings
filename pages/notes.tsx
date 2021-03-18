@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NextPageContext } from "next";
 
 export default function Notes({ data }: any) {
-	const [notes, setNotes] = useState([
-		{
-			id: 1,
-			title: 'My first note',
-			content: 'Taso is bad dev'
-		},
-		{
-			id: 1,
-			title: 'My second note',
-			content: "Goat is really rude"
-		}
-	])
-
-	console.log(data);
-
 	const [text, setText] = useState('');
+	const [title, setTitle] = useState('');
+	const [notes, setNotes] = useState([])
+
+	useEffect(() => {
+		setNotes(data);
+		console.log(data);
+	}, [data])
+
+	const handleOpenNote = (note: any) => {
+		setTitle(note.title);
+		setText(note.content)
+	}
+
+	const handleSaveNote = async (id: any) => {
+		const res = await fetch('/api/saveNote', {
+			method: 'POST',
+			body: JSON.stringify({ id, title, text })
+		})
+	}
+
 
 	return (
 		<div className="grid grid-cols-3 gap-4 h-screen">
@@ -33,15 +38,21 @@ export default function Notes({ data }: any) {
 				 */}
 
 				 <div>
-					 {data.map((note: any) => (
-					 	<div key={note.id} className="p-3 border-gray-300 border-b hover:bg-gray-100 cursor-pointer">
-							  <h1 className="font-medium">{note.title}</h1>
+					 {notes.map((note: any) => (
+					 	<div key={note.id} className="p-3 border-gray-300 border-b hover:bg-gray-100 flex items-center justify-between">
+						  <div>
+							  <h1 className="font-medium hover:underline cursor-pointer" onClick={() => handleOpenNote(note)}>{note.title}</h1>
 							  <p className="text-gray-400">{note.content}</p>
+						  </div>
+						  <div>
+							  <button className="bg-purple-700 rounded-full text-white p-2 py-1 font-medium" onClick={() => handleSaveNote(note.id)}>Save</button>
+						  </div>
 					  </div>
 					 ))}
 				 </div>
 			</aside>
 			<main className="col-span-2">
+				<input placeholder="Title..." value={title} onChange={e => setTitle(e.currentTarget.value)} className="p-3 w-full outline-none border-b" />
 				<textarea placeholder="Start writing!" value={text} onChange={e => setText(e.currentTarget.value)} className="p-3 w-full h-full outline-none"/>
 			</main>
 		</div>
@@ -50,7 +61,7 @@ export default function Notes({ data }: any) {
 
 export async function getStaticProps(ctx: NextPageContext) {
 	const res = await fetch('http://localhost:3000/api/notes', {
-		method: 'POST'
+		method: 'GET'
 	});
 	const data = await res.json();
 
