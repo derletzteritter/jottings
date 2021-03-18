@@ -1,0 +1,7 @@
+.husky
+.idea
+.next
+node_modules
+build
+coverage
+out

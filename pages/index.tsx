@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Head from 'next/head'
-import { User } from "../types/user";
+import Head from 'next/head';
+import { User } from '../types/user';
 
 export default function Home() {
   const [username, setUsername] = useState('');
@@ -9,16 +9,16 @@ export default function Home() {
   const createUser = async (user: User) => {
     await fetch('/api/register', {
       method: 'POST',
-      body: JSON.stringify(user)
-    })
-  }
+      body: JSON.stringify(user),
+    });
+  };
 
   const loginUser = async (user: User) => {
     await fetch('/api/login', {
       method: 'POST',
-      body: JSON.stringify(user)
-    })
-  }
+      body: JSON.stringify(user),
+    });
+  };
 
   return (
     <div>
@@ -31,16 +31,17 @@ export default function Home() {
         <input
           value={username}
           placeholder="Username"
-          onChange={e => setUsername(e.currentTarget.value)}
+          onChange={(e) => setUsername(e.currentTarget.value)}
         />
         <input
           value={password}
           placeholder="Password"
-          onChange={e => setPassword(e.currentTarget.value)}
+          onChange={(e) => setPassword(e.currentTarget.value)}
         />
-        <button onClick={() => loginUser({ username, password })}>Register</button>
+        <button onClick={() => loginUser({ username, password })}>
+          Register
+        </button>
       </main>
-
     </div>
-  )
+  );
 }
