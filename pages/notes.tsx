@@ -14,6 +14,8 @@ export default function Notes() {
 		}
 	])
 
+	const [text, setText] = useState('');
+
 	return (
 		<div className="grid grid-cols-3 gap-4 h-screen">
 			<aside className="border-gray-400 border-r">
@@ -37,7 +39,7 @@ export default function Notes() {
 				 </div>
 			</aside>
 			<main className="col-span-2">
-
+				<textarea placeholder="Start writing!" value={text} onChange={e => setText(e.currentTarget.value)} className="p-3 w-full h-full outline-none"/>
 			</main>
 		</div>
 	)

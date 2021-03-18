@@ -7,7 +7,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const encryptedPassword = await getEncryptedPassword(username);
 
 	await bcrypt.compare(password, encryptedPassword, (err, same) => {
-		// sending result bac
+		// sending result back
 		console.log(same)
 	})
 }
