@@ -13,7 +13,7 @@ export default function Home() {
     });
   };
 
-  const loginUser = async (user: User) => {
+  const createOrLoginUser = async (user: User) => {
     await fetch('/api/login', {
       method: 'POST',
       body: JSON.stringify(user),
@@ -21,7 +21,7 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="flex items-center justify-center h-screen">
       <Head>
         <title>Home</title>
         <link rel="icon" href="/favicon.ico" />
@@ -38,7 +38,7 @@ export default function Home() {
           placeholder="Password"
           onChange={(e) => setPassword(e.currentTarget.value)}
         />
-        <button onClick={() => loginUser({ username, password })}>
+        <button onClick={() => createOrLoginUser({ username, password })}>
           Register
         </button>
       </main>
