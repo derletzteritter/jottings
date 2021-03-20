@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { NextPageContext } from 'next';
+import { Notes } from '../types/notes';
 
 export default function Notes({ data }: any) {
   const [text, setText] = useState('');
   const [title, setTitle] = useState('');
-  const [notes, setNotes] = useState([
+  const [notes, setNotes] = useState<Notes[]>([
     {
       id: 1,
       title: 'My first note',
@@ -43,13 +44,8 @@ export default function Notes({ data }: any) {
           </button>
         </div>
 
-        {/*
-					Here goes the list of notes you have.
-					This is currently mock up data, but will get it from db later on.
-				 */}
-
         <div>
-          {notes.map((note: any) => (
+          {notes.map((note) => (
             <div
               key={note.id}
               className="p-3 border-gray-300 border-b hover:bg-gray-100 flex items-center justify-between"
