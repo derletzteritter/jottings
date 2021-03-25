@@ -9,9 +9,14 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@hapi/iron": "^6.0.0",
     "bcrypt": "^5.0.1",
+    "cookie": "^0.4.1",
     "mysql2": "^2.2.5",
     "next": "10.0.9",
+    "next-connect": "^0.10.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "uuid": "^8.3.2"
