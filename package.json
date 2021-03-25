@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@hapi/iron": "^6.0.0",
+    "@types/passport-local": "^1.0.33",
     "bcrypt": "^5.0.1",
     "cookie": "^0.4.1",
+    "crypto": "^1.0.1",
     "mysql2": "^2.2.5",
     "next": "10.0.9",
     "next-connect": "^0.10.1",

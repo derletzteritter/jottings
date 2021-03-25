@@ -1,24 +1,34 @@
+import passport from 'passport';
+import nextConnect from 'next-connect';
+import { localStrategy } from '../../lib/password';
+import { setLoginSession } from '../../lib/auth';
 import { NextApiRequest, NextApiResponse } from 'next';
-import bcrypt from 'bcrypt';
-import { promisePool } from '../../utils/db';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { username, password } = JSON.parse(req.body);
-  const encryptedPassword = await getEncryptedPassword(username);
-
-  await bcrypt.compare(password, encryptedPassword, (err, same) => {
-    // sending result back
-    console.log(same);
+const authenticate = (method: any, req: any, res: any) =>
+  new Promise((resolve, reject) => {
+    passport.authenticate(method, { session: false }, (error, token) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(token);
+      }
+    })(req, res);
   });
-};
 
-async function getEncryptedPassword(username: string): Promise<string> {
-  const [
-    results,
-  ] = await promisePool.query('SELECT password FROM users WHERE username = ?', [
-    username,
-  ]);
-  const result = <any>results;
+passport.use(localStrategy);
 
-  return result[0].password;
-}
+export default nextConnect()
+  .use(passport.initialize())
+  .post(async (req: NextApiRequest, res: NextApiResponse) => {
+    try {
+      const user: any = await authenticate('local', req, res);
+      const session = { ...user };
+
+      await setLoginSession(res, session);
+
+      res.status(200).send({ done: true });
+    } catch (error) {
+      console.error(error);
+      res.status(401).send(error.message);
+    }
+  });

@@ -1,27 +1,25 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import Router from 'next/router';
 import { User } from '../types/user';
 import { useUser } from '../lib/hooks';
+import Router from 'next/router';
 
-export default function Signup() {
+export default function Login() {
   useUser({ redirectTo: '/', redirectIfFound: true });
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const registerUser = async (user: User) => {
-    console.log(user);
-
+  const loginUser = async (user: User) => {
     try {
-      const res = await fetch('/api/signup', {
+      const res = await fetch('/api/login', {
         method: 'POST',
         body: JSON.stringify(user),
       });
 
       if (res.status === 200) {
-        Router.push('/login');
+        Router.push('/notes');
       } else {
         throw new Error(await res.text());
       }
@@ -53,25 +51,16 @@ export default function Signup() {
           className="p-2 rounded mt-4 font-regular outline-none text-gray-500"
           onChange={(e) => setPassword(e.currentTarget.value)}
         />
-        <div className="flex items-items mt-3">
-          <input
-            value={password}
-            type="checkbox"
-            className="m-1"
-            onChange={(e) => setPassword(e.currentTarget.value)}
-          />
-          <label>Do you like cats?</label>
-        </div>
         <button
           className="text-white p-2 rounded mt-4 bg-indigo-500 hover:bg-indigo-400 outline-none font-medium"
-          onClick={() => registerUser({ username, password })}
+          onClick={() => loginUser({ username, password })}
         >
-          Register
+          Login
         </button>
         <p className="mt-4">
-          Already have an account?{' '}
-          <Link href="/">
-            <span className="text-indigo-500 cursor-pointer">Log in now!</span>
+          Don't have an account?{' '}
+          <Link href="/signup">
+            <span className="text-indigo-500 cursor-pointer">Sign up now!</span>
           </Link>
         </p>
       </main>
