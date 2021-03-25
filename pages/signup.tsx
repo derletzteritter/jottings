@@ -3,12 +3,13 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { User } from '../types/user';
 
-export default function Home() {
+export default function Signup() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const loginUser = async (user: User) => {
-    await fetch('/api/login', {
+  const registerUser = async (user: User) => {
+    console.log(user);
+    await fetch('/api/signup', {
       method: 'POST',
       body: JSON.stringify(user),
     });
@@ -37,16 +38,25 @@ export default function Home() {
           className="p-2 rounded mt-4 font-regular outline-none text-gray-500"
           onChange={(e) => setPassword(e.currentTarget.value)}
         />
+        <div className="flex items-items mt-3">
+          <input
+            value={password}
+            type="checkbox"
+            className="m-1"
+            onChange={(e) => setPassword(e.currentTarget.value)}
+          />
+          <label>Do you like cats?</label>
+        </div>
         <button
           className="text-white p-2 rounded mt-4 bg-indigo-500 hover:bg-indigo-400 outline-none font-medium"
-          onClick={() => loginUser({ username, password })}
+          onClick={() => registerUser({ username, password })}
         >
-          Login
+          Register
         </button>
         <p className="mt-4">
-          Don't have an account?{' '}
-          <Link href="/signup">
-            <span className="text-indigo-500 cursor-pointer">Sign up now!</span>
+          Already have an account?{' '}
+          <Link href="/">
+            <span className="text-indigo-500 cursor-pointer">Log in now!</span>
           </Link>
         </p>
       </main>

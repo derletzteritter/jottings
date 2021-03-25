@@ -1,11 +1,13 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { promisePool } from '../../utils/db';
-import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
+import { promisePool } from '../utils/db';
+import { v4 as uuidv4 } from 'uuid';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { username, password } = JSON.parse(req.body);
+interface User {
+  username: string;
+  password: string;
+}
 
+export const createUser = async ({ username, password }: User) => {
   await bcrypt.genSalt(10, async (err, salt) => {
     await bcrypt.hash(password, salt, async (err, hash) => {
       // stores the user once the hash is created.
@@ -16,5 +18,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     });
   });
 
-  res.send('USER CREATED');
+  return { username, createdAt: Date.now() };
 };
