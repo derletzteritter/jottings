@@ -1,6 +1,6 @@
 import { promisePool } from '../utils/db';
 import { v4 as uuidv4 } from 'uuid';
-import crypto from 'crypto';
+import bcrypt from 'bcrypt';
 
 interface User {
   username: string;
@@ -15,17 +15,12 @@ interface UserLogged {
 }
 
 export const createUser = async ({ username, password }: User) => {
-  const salt = crypto.randomBytes(16).toString('hex');
-  const hash = crypto
-    .pbkdf2Sync(password, salt, 1000, 12, 'sha512')
-    .toString('hex');
-
-  await promisePool.query(
-    'INSERT INTO users (uid, username, password, salt) VALUES (?, ?, ?, ?)',
-    [uuidv4(), username, hash, salt],
-  );
-
-  return { username };
+  bcrypt.hash(password, 10, async (err, hash) => {
+    await promisePool.query(
+      'INSERT INTO users (uid, username, password) VALUES (?, ?, ?)',
+      [uuidv4(), username, hash],
+    );
+  });
 };
 
 export async function findUser({ username }: { username: string }) {
@@ -38,11 +33,3 @@ export async function findUser({ username }: { username: string }) {
   console.log(result);
   return result[0];
 }
-
-export const validatePassword = (user: UserLogged, inputPassword: string) => {
-  const inputHash = crypto
-    .pbkdf2Sync(inputPassword, user.salt, 1000, 12, 'sha512')
-    .toString('hex');
-
-  return user.hash === inputHash;
-};
