@@ -2,30 +2,14 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { User } from '../types/user';
-import { useUser } from '../lib/hooks';
-import Router from 'next/router';
+import { findUser } from '../lib/user';
 
 export default function Login() {
-  useUser({ redirectTo: '/', redirectIfFound: true });
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const loginUser = async (user: User) => {
-    try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        body: JSON.stringify(user),
-      });
-
-      if (res.status === 200) {
-        Router.push('/notes');
-      } else {
-        throw new Error(await res.text());
-      }
-    } catch (error) {
-      console.error('An unexpected error happened occurred:', error);
-    }
+    await findUser({ username: 'chip' });
   };
 
   return (

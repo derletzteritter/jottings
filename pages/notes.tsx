@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NextPageContext } from 'next';
-import { useUser } from '../lib/hooks';
 
 export default function Notes({ data }: any) {
-  const user = useUser({ redirectTo: '/login' });
-
   const [text, setText] = useState('');
   const [title, setTitle] = useState('');
   const [notes, setNotes] = useState<any[]>([

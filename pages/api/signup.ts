@@ -7,6 +7,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     await createUser({ username, password });
     res.status(200).send({ data: true });
   } catch (err) {
-    console.log(err.message);
+    console.log('Could not create a user: ', err);
   }
 };

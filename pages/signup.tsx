@@ -3,31 +3,15 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Router from 'next/router';
 import { User } from '../types/user';
-import { useUser } from '../lib/hooks';
+import { createUser } from '../lib/user';
 
 export default function Signup() {
-  useUser({ redirectTo: '/', redirectIfFound: true });
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const registerUser = async (user: User) => {
     console.log(user);
-
-    try {
-      const res = await fetch('/api/signup', {
-        method: 'POST',
-        body: JSON.stringify(user),
-      });
-
-      if (res.status === 200) {
-        Router.push('/login');
-      } else {
-        throw new Error(await res.text());
-      }
-    } catch (error) {
-      console.error('An unexpected error happened occurred:', error);
-    }
+    await createUser(user);
   };
 
   return (

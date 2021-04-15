@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getLoginSession } from '../../lib/auth';
 import { findUser } from '../../lib/user';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    // This is big broken
     const session = await getLoginSession(req);
     const user = (session && (await findUser(session))) ?? null;
 
