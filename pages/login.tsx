@@ -2,15 +2,12 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { User } from '../types/user';
-import { findUser } from '../lib/user';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const loginUser = async (user: User) => {
-    await findUser({ username: 'chip' });
-  };
+  const loginUser = async (user: User) => {};
 
   return (
     <div className="bg-gray-100 flex items-center justify-center h-screen">

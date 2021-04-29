@@ -6,6 +6,7 @@
     "esModuleInterop": true,
     "strict": true,
     "allowJs": true,
+    "strictNullChecks": false,
     "jsx": "preserve",
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,

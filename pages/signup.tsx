@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import Router from 'next/router';
 import { User } from '../types/user';
 import { createUser } from '../lib/user';
 
@@ -9,9 +8,18 @@ export default function Signup() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const registerUser = async (user: User) => {
-    console.log(user);
-    await createUser(user);
+  const registerUser = async () => {
+    console.log('creating user');
+    const res = await fetch('http://localhost:3000/api/signup', {
+      method: 'POST',
+      body: JSON.stringify({ username, password }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log('created user');
+    const data = await res.json();
+    console.log(data);
   };
 
   return (
@@ -48,13 +56,13 @@ export default function Signup() {
         </div>
         <button
           className="text-white p-2 rounded mt-4 bg-indigo-500 hover:bg-indigo-400 outline-none font-medium"
-          onClick={() => registerUser({ username, password })}
+          onClick={registerUser}
         >
           Register
         </button>
         <p className="mt-4">
           Already have an account?{' '}
-          <Link href="/">
+          <Link href="/login">
             <span className="text-indigo-500 cursor-pointer">Log in now!</span>
           </Link>
         </p>
