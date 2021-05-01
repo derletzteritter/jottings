@@ -16,7 +16,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       httpOnly: true,
       maxAge: maxAge * 1000,
     });
-    res.status(201).json({ user: user.id });
+
+    res.status(201).json({ user: user.uid });
   } catch (err) {
     console.log('Could not create a user: ', err);
   }

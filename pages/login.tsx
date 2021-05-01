@@ -8,7 +8,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
 
   const loginUser = async () => {
-    const res = await fetch('http://localhost:3000', {
+    const res = await fetch('http://localhost:3000/api/login', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
       credentials: 'include',
@@ -16,8 +16,8 @@ export default function Login() {
         'Content-Type': 'application/json',
       },
     });
-    const data = res.json();
-    console.log(data);
+    const data = await res.json();
+    location.href = data.redirect;
   };
 
   return (
