@@ -7,7 +7,18 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const loginUser = async (user: User) => {};
+  const loginUser = async () => {
+    const res = await fetch('http://localhost:3000', {
+      method: 'POST',
+      body: JSON.stringify({ username, password }),
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = res.json();
+    console.log(data);
+  };
 
   return (
     <div className="bg-gray-100 flex items-center justify-center h-screen">
@@ -34,7 +45,7 @@ export default function Login() {
         />
         <button
           className="text-white p-2 rounded mt-4 bg-indigo-500 hover:bg-indigo-400 outline-none font-medium"
-          onClick={() => loginUser({ username, password })}
+          onClick={loginUser}
         >
           Login
         </button>
