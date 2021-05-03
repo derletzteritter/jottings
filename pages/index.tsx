@@ -22,7 +22,7 @@ export default function Home() {
           className="text-white p-2 rounded mt-4 bg-indigo-500 hover:bg-indigo-400 outline-none font-medium"
           onClick={handleRoute}
         >
-          Login
+          Login / Register
         </button>
       </main>
     </div>

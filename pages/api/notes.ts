@@ -1,13 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { promisePool } from '../../utils/db';
+import { handleCreateNote, handleGetNotes } from '../../lib/notes';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const { uid } = req.body;
-  const [results] = await promisePool.query(
-    'SELECT * FROM notes WHERE uid = ?',
-    [uid],
-  );
-  const notes = <any[]>results;
+  const { uid, title, content } = req.body;
+  await handleCreateNote(uid, title, content);
 
-  res.status(200).json(notes);
+  res.status(200).json({ message: 'Creted a new note!' });
 };
