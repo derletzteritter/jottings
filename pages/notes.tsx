@@ -44,7 +44,7 @@ export default function Notes({ data }: any) {
         </div>
 
         <div>
-          {/* {notes.map((note) => (
+          {notes.map((note) => (
             <div
               key={note.id}
               className="p-3 border-gray-300 border-b hover:bg-gray-100 flex items-center justify-between"
@@ -67,7 +67,7 @@ export default function Notes({ data }: any) {
                 </button>
               </div>
             </div>
-          ))} */}
+          ))}
         </div>
       </aside>
       <main className="col-span-2">
@@ -88,7 +88,7 @@ export default function Notes({ data }: any) {
   );
 }
 
-/* export async function getStaticProps(ctx: NextPageContext) {
+export async function getStaticProps(ctx: NextPageContext) {
   const res = await fetch('http://localhost:3000/api/notes', {
     method: 'GET',
   });
@@ -97,4 +97,4 @@ export default function Notes({ data }: any) {
   return {
     props: { data },
   };
-} */
+}
