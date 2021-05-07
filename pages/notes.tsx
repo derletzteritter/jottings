@@ -33,6 +33,10 @@ export default function Notes({ data }: any) {
     });
   };
 
+  const deleteNote = async (id: any) => {
+    const res = await fetch('/api/deleteNopte');
+  };
+
   return (
     <div className="grid grid-cols-3 gap-4 h-screen">
       <aside className="border-gray-400 border-r">
